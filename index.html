@@ -1,0 +1,599 @@
+
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap 5 — Grid System</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #17233d;
+      --muted: #65718a;
+      --purple: #6757e8;
+      --pale: #f5f6ff;
+    }
+
+    body {
+      color: var(--ink);
+      background: #fbfcff;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--purple);
+      color: white;
+      font-weight: 800;
+      margin-right: .55rem;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at 85% 20%, #dcd8ff 0, transparent 30%),
+        linear-gradient(135deg, #f5f4ff, #eef7ff);
+      padding: 6rem 0 5rem;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      color: var(--purple);
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: .78rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.7rem);
+      font-weight: 850;
+      letter-spacing: -.055em;
+      line-height: 1.02;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 610px;
+    }
+
+    .btn-purple {
+      background: var(--purple);
+      color: white;
+      border: 0;
+      border-radius: 12px;
+      padding: .8rem 1.2rem;
+      font-weight: 700;
+    }
+
+    .btn-purple:hover {
+      background: #5141d1;
+      color: white;
+    }
+
+    .grid-demo {
+      background: white;
+      border: 1px solid #e6e8f4;
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 18px 55px #343e6712;
+      transform: rotate(1deg);
+    }
+
+    .demo-cell {
+      min-height: 60px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: #e9e6ff;
+      color: #4e41c5;
+      font-size: .78rem;
+      font-weight: 750;
+    }
+
+    .demo-cell.dark {
+      background: var(--purple);
+      color: white;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      font-weight: 850;
+      letter-spacing: -.035em;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .feature-card {
+      height: 100%;
+      border: 1px solid #e8eaf4;
+      border-radius: 18px;
+      padding: 1.5rem;
+      background: white;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px #28365d12;
+    }
+
+    .icon-box {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: #eeecff;
+      color: var(--purple);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .sample-grid {
+      background: #f0efff;
+      color: #5143c6;
+      padding: 1rem .5rem;
+      border-radius: 9px;
+      text-align: center;
+      font-weight: 700;
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+    }
+
+    .sample-grid.alt {
+      background: #dff5f1;
+      color: #147d70;
+    }
+
+    .code-panel {
+      background: #141a2b;
+      color: #e4e8ff;
+      border-radius: 18px;
+      padding: 1.5rem;
+      overflow: auto;
+    }
+
+    .code-panel code {
+      color: #d8d4ff;
+      white-space: pre;
+    }
+
+    .breakpoint-table th {
+      color: #65718a;
+      font-size: .85rem;
+    }
+
+    .breakpoint-table td,
+    .breakpoint-table th {
+      padding: 1rem;
+    }
+
+    .cta {
+      background: linear-gradient(120deg, #6757e8, #4a75db);
+      color: white;
+      border-radius: 24px;
+      padding: 3rem;
+    }
+
+    footer {
+      border-top: 1px solid #eceef5;
+      color: var(--muted);
+      padding: 2rem 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    @media (max-width: 575.98px) {
+      .hero {
+        padding: 4rem 0 3rem;
+      }
+
+      .hero h1 {
+        font-size: 2.65rem;
+      }
+
+      section {
+        padding: 3.5rem 0;
+      }
+
+      .cta {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="#top">
+      <span class="brand-mark">G</span>GridLab
+    </a>
+
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false"
+      aria-label="Відкрити меню">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+        <li class="nav-item">
+          <a class="nav-link" href="#about">Про сітку</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#examples">Приклади</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#breakpoints">Контрольні точки</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-purple ms-lg-2" href="#practice">Спробувати</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-12 col-lg-7">
+        <div class="eyebrow mb-3">Bootstrap 5 · Grid System</div>
+
+        <h1>
+          Створюй макети.<br>
+          <span style="color:var(--purple)">Думай сіткою.</span>
+        </h1>
+
+        <p class="mt-4 mb-4">
+          Зрозуміла система колонок для адаптивних сайтів —
+          від першого мобільного екрана до широкого монітора.
+        </p>
+
+        <div class="d-flex flex-wrap gap-3">
+          <a class="btn btn-purple" href="#examples">
+            Переглянути приклади ↗
+          </a>
+
+          <a class="btn btn-outline-secondary rounded-3 px-4 py-3 fw-semibold"
+             href="#about">
+            Як це працює
+          </a>
+        </div>
+
+        <div class="d-flex flex-wrap gap-4 mt-4 small text-secondary">
+          <span>✓ 12 колонок</span>
+          <span>✓ Mobile-first</span>
+          <span>✓ Адаптивність</span>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-5">
+        <div class="grid-demo">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="fw-bold">Макет сторінки</span>
+            <span class="badge rounded-pill text-bg-light">12-column grid</span>
+          </div>
+
+          <div class="row g-2 mb-2">
+            <div class="col-12">
+              <div class="demo-cell dark">Header · 12</div>
+            </div>
+          </div>
+
+          <div class="row g-2 mb-2">
+            <div class="col-8">
+              <div class="demo-cell" style="min-height:130px">
+                Main content · 8
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="demo-cell" style="min-height:130px">
+                Sidebar · 4
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-2">
+            <div class="col-4">
+              <div class="demo-cell">Card 1</div>
+            </div>
+            <div class="col-4">
+              <div class="demo-cell">Card 2</div>
+            </div>
+            <div class="col-4">
+              <div class="demo-cell">Card 3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="row mb-4 align-items-end g-3">
+
+      <div class="col-12 col-lg-6">
+        <div class="eyebrow mb-2">Основи</div>
+        <h2 class="section-title display-6">Що таке Grid System?</h2>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <p class="section-sub mb-0">
+          Це спосіб розміщувати елементи у рядках і колонках,
+          щоб сторінка залишалася охайною на різних розмірах екрана.
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="feature-card">
+          <div class="icon-box">▦</div>
+          <h3 class="h5 fw-bold">12 колонок</h3>
+          <p class="text-secondary mb-0">
+            Кожен ряд можна поділити на 12 частин:
+            наприклад, 6 + 6, 4 + 4 + 4 або 8 + 4.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="feature-card">
+          <div class="icon-box">↗</div>
+          <h3 class="h5 fw-bold">Mobile-first</h3>
+          <p class="text-secondary mb-0">
+            Спочатку створюй зручний мобільний макет,
+            а потім додавай правила для більших екранів.
+          </p>
+        </article>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="feature-card">
+          <div class="icon-box">⧉</div>
+          <h3 class="h5 fw-bold">Швидка верстка</h3>
+          <p class="text-secondary mb-0">
+            Класи <code>.container</code>, <code>.row</code>
+            і <code>.col</code> допомагають організувати структуру
+            без зайвих розрахунків.
+          </p>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="examples" style="background:var(--pale)">
+  <div class="container">
+    <div class="eyebrow mb-2">Візуальні приклади</div>
+    <h2 class="section-title display-6 mb-2">Одна сітка — різні макети</h2>
+    <p class="section-sub mb-4">
+      Спробуй змінити ширину вікна браузера й подивись,
+      як блоки перебудовуються.
+    </p>
+
+    <div class="row g-4">
+
+      <div class="col-12 col-lg-6">
+        <div class="feature-card">
+          <h3 class="h5 fw-bold mb-3">Рівні колонки</h3>
+
+          <div class="row g-2 mb-3">
+            <div class="col">
+              <div class="sample-grid">.col</div>
+            </div>
+            <div class="col">
+              <div class="sample-grid alt">.col</div>
+            </div>
+            <div class="col">
+              <div class="sample-grid">.col</div>
+            </div>
+          </div>
+
+          <p class="text-secondary small mb-0">
+            Колонки з класом <code>.col</code> ділять доступний
+            простір порівну.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="feature-card">
+          <h3 class="h5 fw-bold mb-3">Різні пропорції</h3>
+
+          <div class="row g-2 mb-3">
+            <div class="col-8">
+              <div class="sample-grid">.col-8</div>
+            </div>
+            <div class="col-4">
+              <div class="sample-grid alt">.col-4</div>
+            </div>
+          </div>
+
+          <p class="text-secondary small mb-0">
+            Сума ширин дорівнює 12: основна частина займає 8,
+            бічна — 4.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="feature-card">
+          <h3 class="h5 fw-bold mb-3">Адаптивні картки</h3>
+
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+            <div class="col">
+              <div class="sample-grid">Картка 1</div>
+            </div>
+            <div class="col">
+              <div class="sample-grid alt">Картка 2</div>
+            </div>
+            <div class="col">
+              <div class="sample-grid">Картка 3</div>
+            </div>
+            <div class="col">
+              <div class="sample-grid alt">Картка 4</div>
+            </div>
+          </div>
+
+          <p class="text-secondary small mt-3 mb-0">
+            Класи <code>row-cols-1 row-cols-md-2 row-cols-lg-4</code>:
+            одна колонка на телефоні, дві на планшеті,
+            чотири на великому екрані.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="breakpoints">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+
+      <div class="col-12 col-lg-5">
+        <div class="eyebrow mb-2">Адаптивність</div>
+        <h2 class="section-title display-6">Контрольні точки Bootstrap 5</h2>
+
+        <p class="section-sub">
+          Префікси класів дозволяють змінювати розмітку,
+          коли екран досягає певної ширини.
+        </p>
+
+        <div class="code-panel mt-4">
+          <code>&lt;div class="row"&gt;
+  &lt;div class="col-12 col-md-6 col-lg-4"&gt;
+    Адаптивний блок
+  &lt;/div&gt;
+&lt;/div&gt;</code>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-7">
+        <div class="table-responsive rounded-4 border bg-white">
+          <table class="table breakpoint-table mb-0 align-middle">
+            <thead>
+              <tr>
+                <th>Розмір</th>
+                <th>Префікс</th>
+                <th>Ширина екрана</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Extra small</td>
+                <td><code>—</code></td>
+                <td>менше 576 px</td>
+              </tr>
+              <tr>
+                <td>Small</td>
+                <td><code>sm</code></td>
+                <td>від 576 px</td>
+              </tr>
+              <tr>
+                <td>Medium</td>
+                <td><code>md</code></td>
+                <td>від 768 px</td>
+              </tr>
+              <tr>
+                <td>Large</td>
+                <td><code>lg</code></td>
+                <td>від 992 px</td>
+              </tr>
+              <tr>
+                <td>Extra large</td>
+                <td><code>xl</code></td>
+                <td>від 1200 px</td>
+              </tr>
+              <tr>
+                <td>Extra extra large</td>
+                <td><code>xxl</code></td>
+                <td>від 1400 px</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="practice" style="padding-top:1rem">
+  <div class="container">
+    <div class="cta">
+      <div class="row align-items-center g-4">
+
+        <div class="col-12 col-lg-8">
+          <div class="small text-white-50 fw-bold text-uppercase mb-2">
+            Час практикуватися
+          </div>
+
+          <h2 class="fw-bold display-6">Твоя черга зібрати макет</h2>
+
+          <p class="mb-0 text-white-50">
+            Почни з контейнера, додай рядок і розмісти в ньому колонки.
+            Далі експериментуй із класами
+            <code class="text-white">col-md-6</code> та
+            <code class="text-white">col-lg-3</code>.
+          </p>
+        </div>
+
+        <div class="col-12 col-lg-4 text-lg-end">
+          <a class="btn btn-light rounded-3 px-4 py-3 fw-bold"
+             href="https://getbootstrap.com/docs/5.3/layout/grid/"
+             target="_blank" rel="noopener">
+            Документація Bootstrap ↗
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container d-flex flex-column flex-sm-row justify-content-between gap-2">
+    <span class="fw-bold text-dark">GridLab</span>
+    <span>Навчальний сайт про Bootstrap 5 Grid System</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
